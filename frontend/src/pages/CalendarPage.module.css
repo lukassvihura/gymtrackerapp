@@ -1,0 +1,276 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 700px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calPanel,
+.detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Calendar */
+.calHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.monthLabel {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+}
+
+.navBtn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  padding: 6px 13px;
+  font-size: 1rem;
+  transition: all 0.15s;
+}
+
+.navBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dow {
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  padding: 6px 0;
+}
+
+.day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 3px;
+  transition: background 0.15s;
+}
+
+.day:hover {
+  background: var(--surface2);
+}
+
+.dayNum {
+  font-size: 0.85rem;
+}
+
+.today .dayNum {
+  background: var(--accent);
+  color: #0a0a0a;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.selected {
+  background: var(--surface3);
+}
+
+.selected .dayNum {
+  color: var(--accent);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.dotPlaceholder {
+  width: 5px;
+  height: 5px;
+}
+
+/* Detail panel */
+.noSelection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  text-align: center;
+  gap: 10px;
+  padding: 30px;
+}
+
+.noSelection span {
+  font-size: 2.2rem;
+}
+
+.noSelection p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.detailHeader {
+  margin-bottom: 16px;
+}
+
+.detailDate {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.todayBadge {
+  display: inline-block;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid rgba(79, 195, 247, 0.3);
+  border-radius: 10px;
+  font-size: 0.6rem;
+  padding: 2px 7px;
+  margin-left: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+.detailSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.workoutList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.workoutCard {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.workoutIcon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent-glow);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.workoutName {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.workoutStats {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.workoutStats strong {
+  color: var(--accent);
+}
+
+.noWorkouts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  gap: 8px;
+  text-align: center;
+  padding: 20px;
+}
+
+.noWorkouts span {
+  font-size: 1.8rem;
+}
+
+.noWorkouts p {
+  font-size: 0.85rem;
+}
+
+.goToLogBtn {
+  margin-top: 16px;
+  padding: 9px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-size: 0.83rem;
+  transition: all 0.15s;
+  align-self: flex-start;
+}
+
+.goToLogBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

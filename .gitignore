@@ -1,0 +1,22 @@
+# Prerekvizity a knižnice
+node_modules/
+jspm_packages/
+
+# Lokálne konfigurácie a citlivé informácie
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Docker a databáza
+pg_data/
+
+# Produkčné buildy
+dist/
+build/
+.vite/
+
+# Systémové súbory
+.DS_Store
+Thumbs.db
