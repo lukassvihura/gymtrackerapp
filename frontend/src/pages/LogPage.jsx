@@ -32,19 +32,23 @@ export default function LogPage() {
   const [sets, setSets] = useState('')
   const [reps, setReps] = useState('')
   const [weight, setWeight] = useState('')
+  const [notes, setNotes] = useState('')
   const [addError, setAddError] = useState('')
 
   const loadWorkouts = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch(`${API}/workouts?user_id=${user.user_id}&date=${date}`)
+      const res = await fetch(`${API}/workouts?date=${date}`, {
+        credentials: 'include' // Session cookie
+      });
+      if (!res.ok) throw new Error('Chyba pri načítaní');
       setWorkouts(await res.json())
     } catch {
       setWorkouts([])
     } finally {
       setLoading(false)
     }
-  }, [user.user_id, date])
+  }, [date])  // user.user_id už nie je potrebný
 
   useEffect(() => { loadWorkouts() }, [loadWorkouts])
 
@@ -55,39 +59,68 @@ export default function LogPage() {
   }
 
   async function addWorkout() {
-    if (!exercise.trim() || !reps || weight === '') {
+    if (!exercise.trim() || !reps) {
       setAddError('Vyplň správne všetky polia.')
       return
     }
     setAddError('')
-    await fetch(`${API}/workouts`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        exercise: exercise.trim(),
-        sets: Number(sets) || 1,
-        reps: Number(reps),
-        weight: Number(weight),
-        user_id: user.user_id,
-        date,
-      }),
-    })
-    setExercise(''); setSets(''); setReps(''); setWeight('')
+    try {
+      const res = await fetch(`${API}/workouts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Session cookie
+        body: JSON.stringify({
+          exercise: exercise.trim(),
+          sets: Number(sets) || 1,
+          reps: Number(reps),
+          weight: weight === '' ? 0 : Number(weight), // Ak je prázdne, pošli 0
+          notes: notes.trim(),
+          date, // user_id už nie je potrebný, backend ho vezme zo session
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        setAddError(errorData.error || `Chyba ${res.status}: ${res.statusText}`);
+        return;
+      }
+
+    } catch (err) {
+      setAddError(`Chyba pri pridávaní: ${err.message}`);
+      return;
+    }
+    setExercise(''); setSets(''); setReps(''); setWeight(''); setNotes('')
     loadWorkouts()
   }
 
   async function updateWorkout(id, data) {
-    await fetch(`${API}/workouts/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
+    try {
+      const res = await fetch(`${API}/workouts/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Session cookie
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Chyba pri úprave');
+    } catch (err) {
+      alert('Chyba pri úprave cviku');
+      return;
+    }
     loadWorkouts()
   }
 
   async function deleteWorkout(id) {
     if (!confirm('Zmazať tento cvik?')) return
-    await fetch(`${API}/workouts/${id}`, { method: 'DELETE' })
+    try {
+      const res = await fetch(`${API}/workouts/${id}`, {
+        method: 'DELETE',
+        credentials: 'include' // Session cookie
+      });
+      if (!res.ok) throw new Error('Chyba pri mazaní');
+    } catch (err) {
+      alert('Chyba pri mazaní cviku');
+      return;
+    }
     loadWorkouts()
   }
 
@@ -128,7 +161,11 @@ export default function LogPage() {
           </div>
           <div>
             <label className={styles.label}>Váha (kg)</label>
-            <input type="number" min="0" step="0.5" placeholder="80" value={weight} onChange={e => setWeight(e.target.value)} />
+            <input type="number" min="0" step="0.5" placeholder="0" value={weight} onChange={e => setWeight(e.target.value)} />
+          </div>
+          <div style={{ gridColumn: 'span 2' }}>
+            <label className={styles.label}>Poznámka (voliteľné)</label>
+            <input type="text" placeholder="napr. séria do zlyhania, ťažké..." value={notes} onChange={e => setNotes(e.target.value)} />
           </div>
         </div>
         <button className={styles.addBtn} onClick={addWorkout}>+ Pridať</button>

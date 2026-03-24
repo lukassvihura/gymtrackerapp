@@ -16,9 +16,9 @@ export default function Layout() {
       <header className={styles.topbar}>
         <div className={styles.logo}>GYM TRACKER</div>
         <div className={styles.right}>
-          <span className={styles.userPill}>👤 {user.username}</span>
+          <span className={styles.userPill}>{user.username}</span>
           <button className={styles.logoutBtn} onClick={handleLogout}>
-            Odhlásiť ✕
+            Odhlásiť
           </button>
         </div>
       </header>
@@ -30,7 +30,7 @@ export default function Layout() {
             isActive ? `${styles.tabBtn} ${styles.active}` : styles.tabBtn
           }
         >
-          📋 Denník
+          Denník
         </NavLink>
         <NavLink
           to="/calendar"
@@ -38,7 +38,7 @@ export default function Layout() {
             isActive ? `${styles.tabBtn} ${styles.active}` : styles.tabBtn
           }
         >
-          📅 Kalendár
+          Kalendár
         </NavLink>
       </nav>
 

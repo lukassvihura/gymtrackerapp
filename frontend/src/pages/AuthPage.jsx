@@ -27,6 +27,7 @@ export default function AuthPage() {
       const res = await fetch(`${API}/${mode}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Povoliť cookies/session
         body: JSON.stringify({ username: username.trim(), password }),
       })
       const data = await res.json()
@@ -34,7 +35,16 @@ export default function AuthPage() {
         login(data)
         navigate('/log')
       } else {
-        setError(data.error || 'Nastala chyba.')
+        // Špeciálny handling pre neznáme meno - prepnúť na registráciu
+        if (data.suggestion === 'register') {
+          setError(data.message || data.error)
+          setTimeout(() => {
+            setMode('register')
+            setError('') // Vyčistiť chybu po prepnutí
+          }, 2000) // Po 2 sekundách prepnúť
+        } else {
+          setError(data.error || 'Nastala chyba.')
+        }
       }
     } catch {
       setError('Nepodarilo sa spojiť s backendom.')

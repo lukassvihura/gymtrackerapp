@@ -1,15 +1,16 @@
 :root {
-  --bg: #121212;
-  --surface: #1e1e1e;
-  --surface2: #272727;
-  --surface3: #303030;
-  --border: #333;
+  --bg: #2a2a2a; /* Tmavo-sivé dymové pozadie */
+  --surface: #1e1e1e; /* Horná lišta tmavá */
+  --surface2: #3a3a3a; /* Svetlé prvky na tmavom pozadí */
+  --surface3: #404040;
+  --border: #4a4a4a;
   --accent: #4fc3f7;
   --accent-dark: #0288d1;
   --accent-glow: rgba(79, 195, 247, 0.15);
-  --text: #f0f0f0;
-  --text-muted: #888;
-  --text-dim: #555;
+  --text: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --text-dim: #777;
+  --text-header: #ffffff; /* Text pre tmavú hornú lištu */
   --red: #ef5350;
   --green: #66bb6a;
   --radius: 10px;

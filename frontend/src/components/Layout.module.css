@@ -32,16 +32,16 @@
 
 .userPill {
   font-size: 0.78rem;
-  color: var(--text-muted);
-  background: var(--surface2);
-  border: 1px solid var(--border);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 5px 12px;
 }
 
 .logoutBtn {
   font-size: 0.78rem;
-  color: var(--text-dim);
+  color: #cccccc;
   background: none;
   border: none;
   padding: 5px;

@@ -28,12 +28,15 @@ export default function CalendarPage() {
 
   const loadWorkoutDates = useCallback(async () => {
     try {
-      const res = await fetch(`${API}/workout-dates?user_id=${user.user_id}&year=${year}&month=${month}`)
+      const res = await fetch(`${API}/workout-dates?year=${year}&month=${month}`, {
+        credentials: 'include' // Session cookie
+      });
+      if (!res.ok) throw new Error('Chyba pri načítaní');
       setWorkoutDates(await res.json())
     } catch {
       setWorkoutDates([])
     }
-  }, [user.user_id, year, month])
+  }, [year, month])  // user.user_id už nie je potrebný
 
   useEffect(() => { loadWorkoutDates() }, [loadWorkoutDates])
 
@@ -41,7 +44,10 @@ export default function CalendarPage() {
     setSelectedDate(dateStr)
     setLoadingDay(true)
     try {
-      const res = await fetch(`${API}/workouts?user_id=${user.user_id}&date=${dateStr}`)
+      const res = await fetch(`${API}/workouts?date=${dateStr}`, {
+        credentials: 'include' // Session cookie
+      });
+      if (!res.ok) throw new Error('Chyba pri načítaní');
       setDayWorkouts(await res.json())
     } catch {
       setDayWorkouts([])
