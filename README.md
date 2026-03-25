@@ -1,6 +1,6 @@
-# 💪 Gym Progress Tracker
+# Gym Progress Tracker
 
-Webová aplikácia na sledovanie tréningového progresu s registráciou, prihlásením a plnou CRUD funkcionalitou.
+Aplikácia na sledovanie tréningového progresu s možnosťou zapísať si cvik, počet opakovaní, počet sérii, váhu, pridať si poznámku, prehľadávať kalendár ktorý ukazuje zapísané tréningy, registráciou, prihlásením a plnou CRUD funkcionalitou.
 
 ---
 
