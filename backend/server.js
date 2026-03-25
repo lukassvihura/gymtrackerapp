@@ -7,9 +7,8 @@ const session = require('express-session');
 const app = express();
 app.use(express.json());
 app.use(cors({
-  // V Dockeri tvoj frontend beží na porte 80, takže stačí 'http://localhost'
   origin: 'http://localhost',
-  credentials: true // Povoliť cookies
+  credentials: true // cookies
 }));
 
 // Session middleware
@@ -18,9 +17,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // true len pre HTTPS
+    secure: false, 
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hodín
+    maxAge: 24 * 60 * 60 * 1000 
   }
 }));
 
@@ -149,7 +148,7 @@ app.post('/api/logout', (req, res) => {
 // READ - tréningy podľa dátumu
 app.get('/api/workouts', requireAuth, async (req, res) => {
   const { date } = req.query;
-  const user_id = req.session.user_id; // Zo session namiesto query
+  const user_id = req.session.user_id; 
   if (date) {
     const result = await pool.query(
       'SELECT * FROM workouts WHERE user_id = $1 AND date = $2 ORDER BY id ASC',
@@ -189,7 +188,7 @@ app.post('/api/workouts', requireAuth, async (req, res) => {
   if (!exercise || typeof exercise !== 'string' || exercise.trim().length < 1)
     return res.status(400).json({ error: "Cvik musí byť neprázdny text" });
 
-  // Váha - ak nie je zadaná alebo je prázdna, bude 0
+  // Váha 
   const workoutWeight = Number(weight) || 0;
   if (isNaN(workoutWeight) || workoutWeight < 0)
     return res.status(400).json({ error: "Váha musí byť číslo >= 0" });
@@ -220,7 +219,7 @@ app.put('/api/workouts/:id', requireAuth, async (req, res) => {
   if (!exercise || typeof exercise !== 'string' || exercise.trim().length < 1)
     return res.status(400).json({ error: "Cvik musí byť neprázdny text" });
 
-  // Váha - ak nie je zadaná alebo je prázdna, bude 0
+  // Váha 
   const workoutWeight = Number(weight) || 0;
   if (isNaN(workoutWeight) || workoutWeight < 0)
     return res.status(400).json({ error: "Váha musí byť číslo >= 0" });
@@ -238,7 +237,7 @@ app.put('/api/workouts/:id', requireAuth, async (req, res) => {
   if (checkResult.rows[0].user_id !== user_id)
     return res.status(403).json({ error: "Nemáš oprávnenie upravovať tento tréning" });
 
-  // Teraz updatovať
+  // updatovať
   const result = await pool.query(
     'UPDATE workouts SET exercise = $1, weight = $2, reps = $3, sets = $4, notes = $5 WHERE id = $6 RETURNING *',
     [exercise.trim(), workoutWeight, Number(reps), sets ? Number(sets) : 1, notes || '', req.params.id]
@@ -257,7 +256,7 @@ app.delete('/api/workouts/:id', requireAuth, async (req, res) => {
   if (checkResult.rows[0].user_id !== user_id)
     return res.status(403).json({ error: "Nemáš oprávnenie vymazať tento tréning" });
 
-  // Teraz vymazať
+  // vymazať
   const result = await pool.query('DELETE FROM workouts WHERE id = $1 RETURNING id', [req.params.id]);
   res.json({ message: "Zmazané" });
 });

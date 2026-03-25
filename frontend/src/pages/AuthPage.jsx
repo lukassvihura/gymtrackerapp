@@ -35,13 +35,13 @@ export default function AuthPage() {
         login(data)
         navigate('/log')
       } else {
-        // Špeciálny handling pre neznáme meno - prepnúť na registráciu
+        // handling pre neznáme meno - prepnúť na registráciu po 2 sekundách
         if (data.suggestion === 'register') {
           setError(data.message || data.error)
           setTimeout(() => {
             setMode('register')
-            setError('') // Vyčistiť chybu po prepnutí
-          }, 2000) // Po 2 sekundách prepnúť
+            setError('') 
+          }, 2000) 
         } else {
           setError(data.error || 'Nastala chyba.')
         }

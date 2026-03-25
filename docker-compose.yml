@@ -44,8 +44,8 @@ services:
       - frontend-backend
 
 networks:
-  frontend-backend:   # FE → BE komunikácia
-  backend-db:         # BE → DB komunikácia (DB izolovaná od FE)
+  frontend-backend:   # FE → BE komu
+  backend-db:         # BE → DB komu
 
 volumes:
-  pg_data:            # Perzistentné úložisko databázy
+  pg_data:            # úložisko databázy

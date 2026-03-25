@@ -48,7 +48,7 @@ export default function LogPage() {
     } finally {
       setLoading(false)
     }
-  }, [date])  // user.user_id už nie je potrebný
+  }, [date])  
 
   useEffect(() => { loadWorkouts() }, [loadWorkouts])
 
@@ -73,7 +73,7 @@ export default function LogPage() {
           exercise: exercise.trim(),
           sets: Number(sets) || 1,
           reps: Number(reps),
-          weight: weight === '' ? 0 : Number(weight), // Ak je prázdne, pošli 0
+          weight: weight === '' ? 0 : Number(weight), 
           notes: notes.trim(),
           date, // user_id už nie je potrebný, backend ho vezme zo session
         }),
